@@ -65,11 +65,12 @@ class QLearningAgent(ReinforcementAgent):
         """
         "*** YOUR CODE HERE ***"
 
-        all_states=[self.q_values[(state,action)] for action in self.getLegalActions(state)]
-
-        if len(all_states)==0:
+        if len(self.getLegalActions(state))==0:
           return 0
 
+        all_states=[self.q_values[(state,action)] for action in self.getLegalActions(state)]
+
+        
         return max(all_states)
 
     def computeActionFromQValues(self, state):
@@ -79,14 +80,14 @@ class QLearningAgent(ReinforcementAgent):
           you should return None.
         """
         "*** YOUR CODE HERE ***"
+        if len(self.getLegalActions(state))==0:
+          return None
+
         all_states=[self.q_values[(state,action)] for action in self.getLegalActions(state)]
 
         value= max(all_states)
 
         max_indexes= [action for action in self.getLegalActions(state) if self.q_values[(state,action)]== value] 
-
-        if len(max_indexes)==0:
-          return None
 
 
         return random.choice(max_indexes)
